@@ -26,7 +26,7 @@ trait HasOneOrMany
                     $fullKey = $this->getRelated()
                             ->getTable().'.'.$key;
                     $this->query->where($fullKey, '=', $parentKeyValue[$index]);
-                    $this->query->whereNotNull($fullKey);
+                    /*$this->query->whereNotNull($fullKey);*/
                 }
             } else {
                 $fullKey = $this->getRelated()

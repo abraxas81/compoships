@@ -41,7 +41,12 @@ class BelongsTo extends BaseBelongsTo
                 $childAttributes = $this->child->attributesToArray();
                 foreach ($this->ownerKey as $index => $key) {
                     if (array_key_exists($this->foreignKey[$index], $childAttributes)) {
-                        $this->query->where($table.'.'.$key, '=', $this->child->{$this->foreignKey[$index]});
+                        $this->query->where(function ($query) use($table, $key, $index) {
+                            $query->when($table.'.'.$key, function ($query) use($table, $key, $index){
+                                $query->where($table.'.'.$key, '=', $this->child->{$this->foreignKey[$index]});
+                            });
+                        });
+                        /*$this->query->where($table.'.'.$key, '=', $this->child->{$this->foreignKey[$index]});*/
                     }
                 }
             } else {
